@@ -1,5 +1,5 @@
 {
-    "name": "ASAMCW - Exercise 7 - ExecuteDataAnalystAndCEOQueries",
+    "name": "ASAPPOP - Exercise 7 - ExecuteDataAnalystAndCEOQueries",
     "properties": {
         "activities": [
             {
@@ -28,11 +28,11 @@
                             "typeProperties": {
                                 "source": {
                                     "type": "SqlDWSource",
-                                    "sqlReaderQuery": "select count(X.A) from (\nselect CAST(CustomerId as nvarchar(20)) as A from wwi_mcw.SaleSmall) X where A like '%3%'",
+                                    "sqlReaderQuery": "select count(X.A) from (\nselect CAST(CustomerId as nvarchar(20)) as A from wwi_ppop.SaleSmall) X where A like '%3%'",
                                     "queryTimeout": "02:00:00"
                                 },
                                 "dataset": {
-                                    "referenceName": "asamcw_wwi_salesmall_workload1_asa",
+                                    "referenceName": "asappop_wwi_salesmall_workload1_asa",
                                     "type": "DatasetReference"
                                 }
                             }
@@ -66,11 +66,11 @@
                             "typeProperties": {
                                 "source": {
                                     "type": "SqlDWSource",
-                                    "sqlReaderQuery": "select count(X.A) from (\nselect CAST(CustomerId as nvarchar(20)) as A from wwi_mcw.SaleSmall) X where A like '%3%'",
+                                    "sqlReaderQuery": "select count(X.A) from (\nselect CAST(CustomerId as nvarchar(20)) as A from wwi_ppop.SaleSmall) X where A like '%3%'",
                                     "queryTimeout": "02:00:00"
                                 },
                                 "dataset": {
-                                    "referenceName": "asamcw_wwi_salesmall_workload2_asa",
+                                    "referenceName": "asappop_wwi_salesmall_workload2_asa",
                                     "type": "DatasetReference"
                                 }
                             }

@@ -1,5 +1,5 @@
 {
-    "name": "ASAMCW - Exercise 2 - Copy Product Information",
+    "name": "ASAPPOP - Exercise 2 - Copy Product Information",
     "properties": {
         "activities": [
             {
@@ -27,7 +27,7 @@
                     },
                     "sink": {
                         "type": "SqlDWSink",
-                        "preCopyScript": "truncate table wwi_mcw.Product",
+                        "preCopyScript": "truncate table wwi_ppop.Product",
                         "allowPolyBase": true,
                         "polyBaseSettings": {
                             "rejectValue": 0,
@@ -92,13 +92,13 @@
                 },
                 "inputs": [
                     {
-                        "referenceName": "asamcw_product_csv",
+                        "referenceName": "asappop_product_csv",
                         "type": "DatasetReference"
                     }
                 ],
                 "outputs": [
                     {
-                        "referenceName": "asamcw_product_asa",
+                        "referenceName": "asappop_product_asa",
                         "type": "DatasetReference"
                     }
                 ]
