@@ -126,7 +126,7 @@ catch
 
 try
 {
-    $result = Execute-SQLScriptFile-SqlCmd -SQLScriptsPath $sqlScriptsPath -WorkspaceName $workspaceName -SQLPoolName $sqlPoolName -SQLUserName $sqlUserName -SQLPassword $sqlPassword -FileName "01_sqlpool01_mcw" -Parameters $params
+    $result = Execute-SQLScriptFile-SqlCmd -SQLScriptsPath $sqlScriptsPath -WorkspaceName $workspaceName -SQLPoolName $sqlPoolName -SQLUserName $sqlUserName -SQLPassword $sqlPassword -FileName "01_sqlpool01_ppop" -Parameters $params
 }
 catch 
 {
@@ -161,10 +161,10 @@ Wait-ForOperation -WorkspaceName $workspaceName -OperationId $result.operationId
 Write-Information "Create data sets"
 
 $datasets = @{
-        asamcw_product_asa = $sqlPoolName.ToLower()
-        asamcw_product_csv = $dataLakeAccountName
-        asamcw_wwi_salesmall_workload1_asa = "$($sqlPoolName.ToLower())_workload01"      
-        asamcw_wwi_salesmall_workload2_asa = "$($sqlPoolName.ToLower())_workload02" 
+        asappop_product_asa = $sqlPoolName.ToLower()
+        asappop_product_csv = $dataLakeAccountName
+        asappop_wwi_salesmall_workload1_asa = "$($sqlPoolName.ToLower())_workload01"      
+        asappop_wwi_salesmall_workload2_asa = "$($sqlPoolName.ToLower())_workload02" 
 }
 
 foreach ($dataset in $datasets.Keys) 
@@ -180,9 +180,9 @@ $params = @{
         "STORAGELINKEDSERVICENAME" = $blobStorageAccountName
 }
 $workloadPipelines = [ordered]@{
-        copy_products_pipeline = "ASAMCW - Exercise 2 - Copy Product Information"
-        execute_business_analyst_queries = "ASAMCW - Exercise 7 - ExecuteBusinessAnalystQueries"
-        execute_data_analyst_and_ceo_queries = "ASAMCW - Exercise 7 - ExecuteDataAnalystAndCEOQueries"
+        copy_products_pipeline = "ASAPPOP - Exercise 2 - Copy Product Information"
+        execute_business_analyst_queries = "ASAPPOP - Exercise 7 - ExecuteBusinessAnalystQueries"
+        execute_data_analyst_and_ceo_queries = "ASAPPOP - Exercise 7 - ExecuteDataAnalystAndCEOQueries"
 }
 
 foreach ($pipeline in $workloadPipelines.Keys) 
@@ -297,16 +297,16 @@ foreach($usrRole in $sqlUserRoles.Keys){
     }
 }
 
-Write-Information "Verifying the existence of the wwi_mcw schema..."
-$schemaQuery = "select count(name) as Count from sys.schemas where name='wwi_mcw'"
+Write-Information "Verifying the existence of the wwi_ppop schema..."
+$schemaQuery = "select count(name) as Count from sys.schemas where name='wwi_ppop'"
 $result = (Invoke-SqlCmd -Query $schemaQuery -ConnectionString $sqlConnectionString) | Select-Object -ExpandProperty Count
-if ($result -eq 1){Write-Host 'Schema wwi_mcw verified'}else{Write-Host 'Schema wwi_mcw not found' -ForegroundColor Red;$validEnvironment = $false}
+if ($result -eq 1){Write-Host 'Schema wwi_ppop verified'}else{Write-Host 'Schema wwi_ppop not found' -ForegroundColor Red;$validEnvironment = $false}
 
 Write-Information "Verifying the existence of the SQL Pool Tables..."
-$sqlTables = 'Product', 'ASAMCWMLModelExt','ASAMCWMLModel'
+$sqlTables = 'Product', 'ASAPPOPMLModelExt','ASAPPOPMLModel'
 foreach($table in $sqlTables)
 {
-        $tblQuery = "select count(name) as Count from sys.tables where name = '$($table)' and SCHEMA_NAME(schema_id) = 'wwi_mcw'"
+        $tblQuery = "select count(name) as Count from sys.tables where name = '$($table)' and SCHEMA_NAME(schema_id) = 'wwi_ppop'"
         $result = (Invoke-SqlCmd -Query $tblQuery -ConnectionString $sqlConnectionString) | Select-Object -ExpandProperty Count
         if ($result -eq 1){       
         	Write-Host "Table $($table) verified"
@@ -322,14 +322,14 @@ $result = (Invoke-SqlCmd -Query $scopedCredentialQuery -ConnectionString $sqlCon
 if ($result -eq 1){Write-Host 'Database Scoped Credential StorageCredential verified'}else{Write-Host 'Database Scoped Credential StorageCredential not found' -ForegroundColor Red;$validEnvironment = $false}
 
 Write-Information "Verifying the existence of the SQL External Data Source (Storage)..."
-$extDataSourceQuery = "select count(name) as Count from sys.external_data_sources where name='ASAMCWModelStorage'"
+$extDataSourceQuery = "select count(name) as Count from sys.external_data_sources where name='ASAPPOPModelStorage'"
 $result = (Invoke-SqlCmd -Query $extDataSourceQuery -ConnectionString $sqlConnectionString) | Select-Object -ExpandProperty Count
-if ($result -eq 1){Write-Host 'External data source ASAMCWModelStorage verified'}else{Write-Host 'External data source ASAMCWModelStorage not found' -ForegroundColor Red;$validEnvironment = $false}
+if ($result -eq 1){Write-Host 'External data source ASAPPOPModelStorage verified'}else{Write-Host 'External data source ASAPPOPModelStorage not found' -ForegroundColor Red;$validEnvironment = $false}
 
 Write-Information "Verifying the existence of the SQL Pool Model External Table..."
-$extTableQuery = "select count(name) as Count from sys.external_tables where name='ASAMCWMLModelExt' and SCHEMA_NAME(schema_id)='wwi_mcw'"
+$extTableQuery = "select count(name) as Count from sys.external_tables where name='ASAPPOPMLModelExt' and SCHEMA_NAME(schema_id)='wwi_ppop'"
 $result = (Invoke-SqlCmd -Query $extTableQuery -ConnectionString $sqlConnectionString) | Select-Object -ExpandProperty Count
-if ($result -eq 1){Write-Host 'External table ASAMCWMLModelExt verified'}else{Write-Host 'External table ASAMCWMLModelExt not found' -ForegroundColor Red;$validEnvironment = $false}
+if ($result -eq 1){Write-Host 'External table ASAPPOPMLModelExt verified'}else{Write-Host 'External table ASAPPOPMLModelExt not found' -ForegroundColor Red;$validEnvironment = $false}
 
 Write-Information "Verifying the existence of the SQL CSV external file format..."
 $fileFormatQuery = "select count(name) as Count from sys.external_file_formats where name='csv'"
@@ -385,13 +385,13 @@ foreach($path in $pathsAndCounts.Keys){
 }
 
 $asaArtifacts = [ordered]@{
-        "asamcw_wwi_salesmall_workload1_asa" = "datasets"
-        "asamcw_wwi_salesmall_workload2_asa" = "datasets"
-        "asamcw_product_csv" = "datasets"
-        "asamcw_product_asa" = "datasets"
-        "ASAMCW - Exercise 2 - Copy Product Information" = "pipelines"
-        "ASAMCW - Exercise 7 - ExecuteBusinessAnalystQueries" = "pipelines"
-        "ASAMCW - Exercise 7 - ExecuteDataAnalystAndCEOQueries" = "pipelines"
+        "asappop_wwi_salesmall_workload1_asa" = "datasets"
+        "asappop_wwi_salesmall_workload2_asa" = "datasets"
+        "asappop_product_csv" = "datasets"
+        "asappop_product_asa" = "datasets"
+        "ASAPPOP - Exercise 2 - Copy Product Information" = "pipelines"
+        "ASAPPOP - Exercise 7 - ExecuteBusinessAnalystQueries" = "pipelines"
+        "ASAPPOP - Exercise 7 - ExecuteDataAnalystAndCEOQueries" = "pipelines"
         "$($keyVaultName)" = "linkedServices"
         "$($dataLakeAccountName)" = "linkedServices"
         "$($blobStorageAccountName)" = "linkedServices"
