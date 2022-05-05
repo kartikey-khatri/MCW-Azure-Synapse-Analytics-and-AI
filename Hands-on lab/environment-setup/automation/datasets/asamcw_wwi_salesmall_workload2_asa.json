@@ -1,5 +1,5 @@
 {
-    "name": "asamcw_wwi_salesmall_workload2_asa",
+    "name": "asappop_wwi_salesmall_workload2_asa",
     "properties": {
         "linkedServiceName": {
             "referenceName": "#LINKED_SERVICE_NAME#",
@@ -67,7 +67,7 @@
             }
         ],
         "typeProperties": {
-            "schema": "wwi_mcw",
+            "schema": "wwi_ppop",
             "table": "SaleSmall"
         }
     },

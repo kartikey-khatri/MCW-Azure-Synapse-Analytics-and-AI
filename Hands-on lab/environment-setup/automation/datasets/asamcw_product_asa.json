@@ -1,5 +1,5 @@
 {
-    "name": "asamcw_product_asa",
+    "name": "asappop_product_asa",
     "properties": {
         "linkedServiceName": {
             "referenceName": "#LINKED_SERVICE_NAME#",
