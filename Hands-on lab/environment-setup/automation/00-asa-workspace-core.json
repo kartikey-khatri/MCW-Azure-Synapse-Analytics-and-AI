@@ -36,7 +36,7 @@
     "sparkAutoPauseEnabled": "true",
     "sparkAutoPauseDelayInMinutes": "15",
     "sparkVersion": "2.4",
-    "keyVaultName": "[concat('asakeyvault', parameters('uniqueSuffix'))]",
+    "keyVaultName": "[concat('asappopkeyvault', parameters('uniqueSuffix'))]",
     "blobStorageAccountName": "[concat('asastore', parameters('uniqueSuffix'))]",
     "applicationInsightsName": "[concat('asaappinsights', parameters('uniqueSuffix'))]",
     "amlWorkspaceName": "[concat('amlworkspace', parameters('uniqueSuffix'))]"   
