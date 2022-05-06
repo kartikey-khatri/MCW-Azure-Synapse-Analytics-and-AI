@@ -32,7 +32,7 @@
             }
         ],
         "typeProperties": {
-            "schema": "wwi_mcw",
+            "schema": "wwi_ppop",
             "table": "Product"
         }
     },
