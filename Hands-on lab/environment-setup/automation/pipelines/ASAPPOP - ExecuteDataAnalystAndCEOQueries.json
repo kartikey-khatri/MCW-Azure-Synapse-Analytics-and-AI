@@ -1,7 +1,45 @@
 {
-    "name": "ASAPPOP - Exercise 7 - ExecuteBusinessAnalystQueries",
+    "name": "ASAPPOP - ExecuteDataAnalystAndCEOQueries",
     "properties": {
         "activities": [
+            {
+                "name": "CEO",
+                "type": "ForEach",
+                "dependsOn": [],
+                "userProperties": [],
+                "typeProperties": {
+                    "items": {
+                        "value": "@range(1,20)",
+                        "type": "Expression"
+                    },
+                    "activities": [
+                        {
+                            "name": "Workload 1 for CEO",
+                            "type": "Lookup",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "7.00:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "SqlDWSource",
+                                    "sqlReaderQuery": "select count(X.A) from (\nselect CAST(CustomerId as nvarchar(20)) as A from wwi_ppop.SaleSmall) X where A like '%3%'",
+                                    "queryTimeout": "02:00:00"
+                                },
+                                "dataset": {
+                                    "referenceName": "asappop_wwi_salesmall_workload1_asa",
+                                    "type": "DatasetReference"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
             {
                 "name": "Analyst",
                 "type": "ForEach",
@@ -9,7 +47,7 @@
                 "userProperties": [],
                 "typeProperties": {
                     "items": {
-                        "value": "@range(1,10)",
+                        "value": "@range(1,20)",
                         "type": "Expression"
                     },
                     "activities": [
